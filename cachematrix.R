@@ -46,13 +46,11 @@ makeCacheMatrix <- function(x = matrix()) {
 ## matrix has not changed), then it should retrieve the inverse from the cache.
 cacheSolve <- function(x, ...) {
   
-  ret 
-  
   inv <- x$getInverse()
   
   # if Inverse Matrix is cound in the cache
   if (!is.null(inv)) {
-    
+    message()
     ret <- inv
     
   } else{
@@ -68,5 +66,45 @@ cacheSolve <- function(x, ...) {
     
   }
   
-  return(inv)
+  return(ret)
 }
+
+
+## now some testing
+## -----------------------------
+
+# Basic Test Matrix
+basic_matrix <- matrix(rnorm(16),4,4)
+basic_matrix 
+#          [,1]       [,2]        [,3]       [,4]
+# [1,] -1.1857570  0.6509791  1.53486312 -0.4394518
+# [2,]  0.2559072 -1.8261497 -1.12531955 -0.2518908
+# [3,]  0.1174074  0.9693064  0.04249344 -1.0454860
+# [4,]  0.8891443 -0.3740881  2.68017314  0.1716959
+
+# Create our <<special>> Matrix
+cacheMatrix <- makeCacheMatrix(basic_matrix)
+
+cacheMatrix$get() 
+#          [,1]       [,2]        [,3]       [,4]
+# [1,] -1.1857570  0.6509791  1.53486312 -0.4394518
+# [2,]  0.2559072 -1.8261497 -1.12531955 -0.2518908
+# [3,]  0.1174074  0.9693064  0.04249344 -1.0454860
+# [4,]  0.8891443 -0.3740881  2.68017314  0.1716959
+
+cacheMatrix$getInverse()
+# NULL ## Thats right! 
+
+cacheSolve(cacheMatrix)
+#          [,1]         [,2]        [,3]        [,4]
+# [1,] -0.6082001 -0.103191447  0.32973434  0.29974517
+# [2,] -0.1729458 -0.494350948  0.17352582 -0.11127207
+# [3,]  0.1917785 -0.004650155 -0.03647802  0.26190972
+# [4,] -0.2208497 -0.470107287 -0.76006485 -0.05885777
+
+cacheMatrix$getInverse()
+#          [,1]         [,2]        [,3]        [,4]
+# [1,] -0.6082001 -0.103191447  0.32973434  0.29974517
+# [2,] -0.1729458 -0.494350948  0.17352582 -0.11127207
+# [3,]  0.1917785 -0.004650155 -0.03647802  0.26190972
+# [4,] -0.2208497 -0.470107287 -0.76006485 -0.05885777
