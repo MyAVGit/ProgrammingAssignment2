@@ -50,7 +50,7 @@ cacheSolve <- function(x, ...) {
   
   # if Inverse Matrix is cound in the cache
   if (!is.null(inv)) {
-    message()
+    message("get the cached Data...")
     ret <- inv
     
   } else{
